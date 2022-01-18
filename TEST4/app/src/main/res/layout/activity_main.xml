@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="이름과 학번을 입력해주세요"
+        android:textColor="#00BCD4"
+        android:textSize="20sp"/>
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="이름을 입력하세요.."
+
+        />
+
+    <EditText
+        android:id="@+id/grade_number"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="학번을 입력하세요.."
+
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="login"
+
+            />
+
+        <ImageView
+            android:id="@+id/btn_img"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@mipmap/ic_launcher"
+
+            />
+
+        <Button
+            android:id="@+id/btn_webview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="WebView"
+
+            />
+
+        <Button
+            android:id="@+id/btn_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Camera" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/list_string"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+
+        <Button
+            android:id="@+id/btn_start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Thread start" />
+
+        <Button
+            android:id="@+id/btn_stop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Thread stop"
+            />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
