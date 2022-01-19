@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private Button btn_camera;
     private ListView list_string;
     private Button btn_start,btn_stop;
+    private Button btn_music_start,btn_music_stop;
+    private Button btn_record;
     ImageView btn_img;
 
     Thread thread;
@@ -48,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
         btn_camera = findViewById(R.id.btn_camera);
         btn_start=findViewById(R.id.btn_start);
         btn_stop=findViewById(R.id.btn_stop);
+        btn_music_start=findViewById(R.id.btn_music_start);
+        btn_music_stop=findViewById(R.id.btn_music_stop);
+        btn_record=findViewById(R.id.btn_record);
 
 
 
@@ -75,6 +80,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this,CameraActivity.class);
+                startActivity(intent);
+            }
+        });
+        btn_record.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,MediaRecordActivity.class);
                 startActivity(intent);
             }
         });
@@ -123,6 +135,23 @@ public class MainActivity extends AppCompatActivity {
         data.add("졸작 얼른 만들고 싶다");
         data.add("스레드 버튼을 눌러보세요!");
         adapter.notifyDataSetChanged();
+
+        btn_music_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startService(new Intent(getApplicationContext(),MusicService.class));
+
+            }
+        });
+
+        btn_music_stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                stopService(new Intent(getApplicationContext(),MusicService.class));
+
+
+            }
+        });
 
 
 
