@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.strictmode.ImplicitDirectBootViolation;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,6 +16,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView list_string;
     private Button btn_start,btn_stop;
     private Button btn_music_start,btn_music_stop;
-    private Button btn_record;
+
     ImageView btn_img;
 
     Thread thread;
@@ -52,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         btn_stop=findViewById(R.id.btn_stop);
         btn_music_start=findViewById(R.id.btn_music_start);
         btn_music_stop=findViewById(R.id.btn_music_stop);
-        btn_record=findViewById(R.id.btn_record);
+
 
 
 
@@ -80,13 +85,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this,CameraActivity.class);
-                startActivity(intent);
-            }
-        });
-        btn_record.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,MediaRecordActivity.class);
                 startActivity(intent);
             }
         });
@@ -155,8 +153,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
     }
 
     private Handler handler = new Handler(){
@@ -167,4 +163,5 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"선주 똑똑해",Toast.LENGTH_SHORT).show();
         }
     };
+
 }
