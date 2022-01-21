@@ -54,6 +54,14 @@
             android:src="@mipmap/ic_launcher"
 
             />
+        <com.github.ybq.android.spinkit.SpinKitView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/spin_kit"
+            style="@style/SpinKitView.CubeGrid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:SpinKit_Color="#4CAF50" />
 
         <Button
             android:id="@+id/btn_webview"
@@ -122,6 +130,27 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="music stop"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:entries="@array/testarray">
+
+        </Spinner>
+
+        <TextView
+            android:id="@+id/array_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="dropdown result"/>
+
 
 
     </LinearLayout>

@@ -10,11 +10,14 @@ import android.os.Message;
 import android.os.strictmode.ImplicitDirectBootViolation;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,11 +38,28 @@ public class MainActivity extends AppCompatActivity {
     private ListView list_string;
     private Button btn_start,btn_stop;
     private Button btn_music_start,btn_music_stop;
+    private Spinner spinner;
+    private TextView array_result;
+    private long backBtnTime=0;
 
     ImageView btn_img;
 
     Thread thread;
     boolean isThread = false;
+
+    @Override
+    public void onBackPressed() {
+        long curTime = System.currentTimeMillis();
+        long gapTime = curTime-backBtnTime;
+
+        if(0<=gapTime && 2000>=gapTime){
+            super.onBackPressed();
+        }
+        else{
+            backBtnTime = curTime;
+            Toast.makeText(this,"한번 더 누르면 종료됩니다",Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @Override //처음 켜면 나오는 화면
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
         btn_stop=findViewById(R.id.btn_stop);
         btn_music_start=findViewById(R.id.btn_music_start);
         btn_music_stop=findViewById(R.id.btn_music_stop);
-
+        spinner=findViewById(R.id.spinner);
+        array_result=findViewById(R.id.array_result);
 
 
 
@@ -147,6 +168,18 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 stopService(new Intent(getApplicationContext(),MusicService.class));
 
+
+            }
+        });
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                array_result.setText(adapterView.getItemAtPosition(i).toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
         });

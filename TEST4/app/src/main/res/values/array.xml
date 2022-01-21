@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="testarray">
+        <item>spinner test</item>
+        <item>언제 다하냐</item>
+        <item>ㅠ그만하고싶다</item>
+        <item>외국사람은 부럽다</item>
+        <item>영어공부 안할수 있어서 ㅜ</item>
+
+    </string-array>
+
+</resources>
