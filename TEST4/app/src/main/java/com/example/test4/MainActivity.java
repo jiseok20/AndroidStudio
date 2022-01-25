@@ -2,6 +2,7 @@ package com.example.test4;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.TintableCheckedTextView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private String str1,str2;
     private Button btn_login;
     private Button btn_webview;
-    private Button btn_camera;
+    private Button btn_camera2;
     private ListView list_string;
     private Button btn_start,btn_stop;
     private Button btn_music_start,btn_music_stop;
@@ -72,13 +73,13 @@ public class MainActivity extends AppCompatActivity {
         list_string =(ListView) findViewById(R.id.list_string);
         btn_img = (ImageView)findViewById(R.id.btn_img);
         btn_webview =findViewById(R.id.btn_webview);
-        btn_camera = findViewById(R.id.btn_camera);
         btn_start=findViewById(R.id.btn_start);
         btn_stop=findViewById(R.id.btn_stop);
         btn_music_start=findViewById(R.id.btn_music_start);
         btn_music_stop=findViewById(R.id.btn_music_stop);
         spinner=findViewById(R.id.spinner);
         array_result=findViewById(R.id.array_result);
+        btn_camera2=findViewById(R.id.btn_camera2);
 
 
 
@@ -102,10 +103,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        btn_camera.setOnClickListener(new View.OnClickListener() {
+        btn_camera2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,CameraActivity.class);
+                Intent intent = new Intent(MainActivity.this,CameraActivity2.class);
                 startActivity(intent);
             }
         });
