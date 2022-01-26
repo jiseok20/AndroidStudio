@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
     private String str1,str2;
     private Button btn_login;
     private Button btn_webview;
-    private Button btn_camera2;
     private ListView list_string;
     private Button btn_start,btn_stop;
     private Button btn_music_start,btn_music_stop;
@@ -80,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
         btn_music_stop=findViewById(R.id.btn_music_stop);
         spinner=findViewById(R.id.spinner);
         array_result=findViewById(R.id.array_result);
-        btn_camera2=findViewById(R.id.btn_camera2);
         btn_QR=findViewById(R.id.btn_QR);
 
 
@@ -102,13 +100,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this,WebActivity.class);
-                startActivity(intent);
-            }
-        });
-        btn_camera2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,CameraActivity2.class);
                 startActivity(intent);
             }
         });

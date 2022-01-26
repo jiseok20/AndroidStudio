@@ -20,7 +20,7 @@ public class QRScanActivity extends AppCompatActivity {
 
         qrScan =new IntentIntegrator(this);
         qrScan.setOrientationLocked(false);
-        qrScan.setPrompt("강의실의 바코드를 찍어주세요");
+        qrScan.setPrompt("강의실의 QR코드를 찍어주세요");
         qrScan.initiateScan();
 
     }
@@ -34,6 +34,8 @@ public class QRScanActivity extends AppCompatActivity {
                 // todo
             } else {
                 Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(QRScanActivity.this,CameraActivity2.class);
+                startActivity(intent);
                 // todo
             }
         } else {

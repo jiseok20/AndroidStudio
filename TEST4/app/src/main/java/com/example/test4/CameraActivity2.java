@@ -73,10 +73,10 @@ public class CameraActivity2 extends AppCompatActivity {
 
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     static {
-        ORIENTATIONS.append(ExifInterface.ORIENTATION_NORMAL, 0);
-        ORIENTATIONS.append(ExifInterface.ORIENTATION_ROTATE_90, 90);
-        ORIENTATIONS.append(ExifInterface.ORIENTATION_ROTATE_180, 180);
-        ORIENTATIONS.append(ExifInterface.ORIENTATION_ROTATE_270, 270);
+        ORIENTATIONS.append(ExifInterface.ORIENTATION_NORMAL, 180);
+        ORIENTATIONS.append(ExifInterface.ORIENTATION_ROTATE_90, 270);
+        ORIENTATIONS.append(ExifInterface.ORIENTATION_ROTATE_180, 0);
+        ORIENTATIONS.append(ExifInterface.ORIENTATION_ROTATE_270, 90);
     }
 
     @Override
@@ -95,6 +95,7 @@ public class CameraActivity2 extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 takePicture();
             }
         });
@@ -128,7 +129,7 @@ public class CameraActivity2 extends AppCompatActivity {
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        mDSI_height = displayMetrics.heightPixels;
+        mDSI_height =displayMetrics.heightPixels;
         mDSI_width = displayMetrics.widthPixels;
 
 
@@ -166,7 +167,7 @@ public class CameraActivity2 extends AppCompatActivity {
         mHandler = new Handler(handlerThread.getLooper());
         Handler mainHandler = new Handler(getMainLooper());
         try {
-            String mCameraId = "" + CameraCharacteristics.LENS_FACING_FRONT; // 후면 카메라 사용
+            String mCameraId = "" + CameraCharacteristics.LENS_FACING_BACK; // 전면 카메라 사용
 
             CameraManager mCameraManager = (CameraManager) this.getSystemService(Context.CAMERA_SERVICE);
             CameraCharacteristics characteristics = mCameraManager.getCameraCharacteristics(mCameraId);
@@ -279,7 +280,7 @@ public class CameraActivity2 extends AppCompatActivity {
     public void takePicture() {
 
         try {
-            CaptureRequest.Builder captureRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);//用来设置拍照请求的request
+            CaptureRequest.Builder captureRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
             captureRequestBuilder.addTarget(mImageReader.getSurface());
             captureRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
             captureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
@@ -413,7 +414,7 @@ public class CameraActivity2 extends AppCompatActivity {
     }
 
 
-    // 출처 https://stackoverflow.com/a/43516672
+
     private void setAspectRatioTextureView(int ResolutionWidth , int ResolutionHeight )
     {
         if(ResolutionWidth > ResolutionHeight){
