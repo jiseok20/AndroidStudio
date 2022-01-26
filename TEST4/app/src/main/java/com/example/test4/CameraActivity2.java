@@ -435,5 +435,3 @@ public class CameraActivity2 extends AppCompatActivity {
     }
 
 }
-
-

@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btn_start,btn_stop;
     private Button btn_music_start,btn_music_stop;
     private Spinner spinner;
+    private Button btn_QR;
     private TextView array_result;
     private long backBtnTime=0;
 
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         spinner=findViewById(R.id.spinner);
         array_result=findViewById(R.id.array_result);
         btn_camera2=findViewById(R.id.btn_camera2);
+        btn_QR=findViewById(R.id.btn_QR);
 
 
 
@@ -170,6 +172,14 @@ public class MainActivity extends AppCompatActivity {
                 stopService(new Intent(getApplicationContext(),MusicService.class));
 
 
+            }
+        });
+
+        btn_QR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,QRScanActivity.class);
+                startActivity(intent);
             }
         });
 
