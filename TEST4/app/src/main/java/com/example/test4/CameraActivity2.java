@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -14,6 +15,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
+import android.graphics.PointF;
+import android.graphics.Rect;
 import android.graphics.SurfaceTexture;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -51,9 +54,20 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.mlkit.vision.common.InputImage;
+import com.google.mlkit.vision.face.Face;
+import com.google.mlkit.vision.face.FaceContour;
+import com.google.mlkit.vision.face.FaceDetection;
+import com.google.mlkit.vision.face.FaceDetector;
+import com.google.mlkit.vision.face.FaceDetectorOptions;
+
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
+import java.util.List;
 
 public class CameraActivity2 extends AppCompatActivity {
 
@@ -70,8 +84,11 @@ public class CameraActivity2 extends AppCompatActivity {
     private SensorManager mSensorManager;
     private DeviceOrientation deviceOrientation;
     int mDSI_height, mDSI_width;
+    private GraphicOverlay mGraphicOverlay;
 
-    private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
+
+
+    private static final SparseIntArray ORIENTATIONS = new SparseIntArray();  //rotation setting
     static {
         ORIENTATIONS.append(ExifInterface.ORIENTATION_NORMAL, 180);
         ORIENTATIONS.append(ExifInterface.ORIENTATION_ROTATE_90, 270);
@@ -79,9 +96,13 @@ public class CameraActivity2 extends AppCompatActivity {
         ORIENTATIONS.append(ExifInterface.ORIENTATION_ROTATE_270, 90);
     }
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // full screen setting
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -92,10 +113,9 @@ public class CameraActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_camera2);
 
         ImageButton button = findViewById(R.id.take_photo);
-        button.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() { //button 누르면 사진 촬영
             @Override
             public void onClick(View view) {
-
                 takePicture();
             }
         });
@@ -105,7 +125,7 @@ public class CameraActivity2 extends AppCompatActivity {
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mMagnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         deviceOrientation = new DeviceOrientation();
-
+        mGraphicOverlay = findViewById(R.id.graphic_overlay);
         initSurfaceView();
 
     }
@@ -113,7 +133,6 @@ public class CameraActivity2 extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         mSensorManager.registerListener(deviceOrientation.getEventListener(), mAccelerometer, SensorManager.SENSOR_DELAY_UI);
         mSensorManager.registerListener(deviceOrientation.getEventListener(), mMagnetometer, SensorManager.SENSOR_DELAY_UI);
     }
@@ -121,7 +140,6 @@ public class CameraActivity2 extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-
         mSensorManager.unregisterListener(deviceOrientation.getEventListener());
     }
 
@@ -140,7 +158,6 @@ public class CameraActivity2 extends AppCompatActivity {
             public void surfaceCreated(SurfaceHolder holder) {
                 initCameraAndPreview();
             }
-
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
 
@@ -149,16 +166,12 @@ public class CameraActivity2 extends AppCompatActivity {
                     mCameraDevice = null;
                 }
             }
-
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 
             }
-
-
         });
     }
-
 
     @TargetApi(19)
     public void initCameraAndPreview() {
@@ -189,20 +202,37 @@ public class CameraActivity2 extends AppCompatActivity {
         }
     }
 
+    //얼굴인식 삽입 후보1
 
     private ImageReader.OnImageAvailableListener mOnImageAvailableListener = new ImageReader.OnImageAvailableListener() {
         @Override
         public void onImageAvailable(ImageReader reader) {
 
             Image image = reader.acquireNextImage();
+
             ByteBuffer buffer = image.getPlanes()[0].getBuffer();
             byte[] bytes = new byte[buffer.remaining()];
             buffer.get(bytes);
             final Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             new SaveImageTask().execute(bitmap);
+            int rotation = 180;
+            try {
+                rotation = getRotationCompensation();
+            } catch (CameraAccessException e) {
+                e.printStackTrace();
+            }
+            InputImage frame = InputImage.fromBitmap(bitmap,rotation);
+            detectFaces(frame);
+
         }
     };
 
+    private int getRotationCompensation() throws CameraAccessException{
+        int deviceRotation = this.getWindowManager().getDefaultDisplay().getRotation();
+        int rotationCompensation = ORIENTATIONS.get(deviceRotation);
+
+        return rotationCompensation;
+    }
 
     private CameraDevice.StateCallback deviceStateCallback = new CameraDevice.StateCallback() {
         @Override
@@ -434,5 +464,45 @@ public class CameraActivity2 extends AppCompatActivity {
         Log.d("@@@", "TextureView Width : " + viewWidth + " TextureView Height : " + viewHeight);
         mSurfaceView.setLayoutParams(new FrameLayout.LayoutParams(viewWidth, viewHeight));
     }
+
+    private void detectFaces(InputImage image){
+        FaceDetectorOptions realTimeOpts =
+                new FaceDetectorOptions.Builder()
+                        .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
+                        .setContourMode(FaceDetectorOptions.CONTOUR_MODE_ALL)
+                        .build();
+
+        FaceDetector detector = FaceDetection.getClient(realTimeOpts);
+
+
+        detector.process(image)
+                .addOnSuccessListener(new OnSuccessListener<List<Face>>() {
+                    @Override
+                    public void onSuccess(List<Face> faces) {
+                        for(Face face : faces){
+                            Rect bounds = face.getBoundingBox();
+                            float rotX = face.getHeadEulerAngleX();
+                            float rotY = face.getHeadEulerAngleY();
+                            float rotZ = face.getHeadEulerAngleZ();
+
+                            List<FaceContour> faceContour =
+                                    face.getAllContours();
+
+                            takePicture();
+
+                        }
+
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(CameraActivity2.this,"얼굴인식이 되지 않았습니다",Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+    }
+
 
 }

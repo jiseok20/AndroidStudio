@@ -41,5 +41,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:29.0.3')
     implementation 'com.google.firebase:firebase-messaging'
     implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-firestore:24.0.0'
+    implementation 'com.google.android.gms:play-services-mlkit-face-detection:17.0.0'
 }
 
