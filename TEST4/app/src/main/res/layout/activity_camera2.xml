@@ -13,8 +13,9 @@
         />
     <com.example.test4.GraphicOverlay
         android:id="@+id/graphic_overlay"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
     <ImageButton
         android:id="@+id/take_photo"
         android:layout_width="150dp"

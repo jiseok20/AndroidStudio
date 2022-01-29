@@ -209,12 +209,10 @@ public class CameraActivity2 extends AppCompatActivity {
         public void onImageAvailable(ImageReader reader) {
 
             Image image = reader.acquireNextImage();
-
             ByteBuffer buffer = image.getPlanes()[0].getBuffer();
             byte[] bytes = new byte[buffer.remaining()];
             buffer.get(bytes);
             final Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-            new SaveImageTask().execute(bitmap);
             int rotation = 180;
             try {
                 rotation = getRotationCompensation();
@@ -223,15 +221,16 @@ public class CameraActivity2 extends AppCompatActivity {
             }
             InputImage frame = InputImage.fromBitmap(bitmap,rotation);
             detectFaces(frame);
+            new SaveImageTask().execute(bitmap);
 
         }
     };
 
     private int getRotationCompensation() throws CameraAccessException{
         int deviceRotation = this.getWindowManager().getDefaultDisplay().getRotation();
-        int rotationCompensation = ORIENTATIONS.get(deviceRotation);
 
-        return rotationCompensation;
+        int i = ORIENTATIONS.get(deviceRotation);
+        return i;
     }
 
     private CameraDevice.StateCallback deviceStateCallback = new CameraDevice.StateCallback() {
@@ -466,6 +465,7 @@ public class CameraActivity2 extends AppCompatActivity {
     }
 
     private void detectFaces(InputImage image){
+        Toast.makeText(this, "사진을 전송했습니다.", Toast.LENGTH_SHORT).show();
         FaceDetectorOptions realTimeOpts =
                 new FaceDetectorOptions.Builder()
                         .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
@@ -473,35 +473,39 @@ public class CameraActivity2 extends AppCompatActivity {
                         .build();
 
         FaceDetector detector = FaceDetection.getClient(realTimeOpts);
-
-
         detector.process(image)
-                .addOnSuccessListener(new OnSuccessListener<List<Face>>() {
+                .addOnSuccessListener(
+                        new OnSuccessListener<List<Face>>() {
                     @Override
                     public void onSuccess(List<Face> faces) {
-                        for(Face face : faces){
-                            Rect bounds = face.getBoundingBox();
-                            float rotX = face.getHeadEulerAngleX();
-                            float rotY = face.getHeadEulerAngleY();
-                            float rotZ = face.getHeadEulerAngleZ();
-
-                            List<FaceContour> faceContour =
-                                    face.getAllContours();
-
-                            takePicture();
-
+                        processFaceContourDetectionResult(faces);
                         }
 
-
-                    }
                 })
-                .addOnFailureListener(new OnFailureListener() {
+                .addOnFailureListener(
+                        new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(CameraActivity2.this,"얼굴인식이 되지 않았습니다",Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
 
                     }
                 });
+    }
+
+    private void processFaceContourDetectionResult(List<Face> faces) {
+        if(faces.size() == 0){
+            Toast.makeText(CameraActivity2.this,"얼굴인식이 되지 않았습니다",Toast.LENGTH_SHORT).show();
+            return;
+
+        }
+
+
+        for(int i=0;i<faces.size();++i){
+            Face face = faces.get(i);
+            FaceContourGraphic faceGraphic = new FaceContourGraphic(mGraphicOverlay);
+            mGraphicOverlay.add(faceGraphic);
+            faceGraphic.updateFace(face);
+        }
     }
 
 
