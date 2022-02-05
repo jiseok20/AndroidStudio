@@ -1,6 +1,9 @@
 package com.example.test4;
 
 
+import static java.lang.String.format;
+
+import android.annotation.SuppressLint;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -61,6 +64,7 @@ public class FaceContourGraphic extends GraphicOverlay.Graphic {
     }
 
     /** Draws the face annotations for position on the supplied canvas. */
+    @SuppressLint("DefaultLocale")
     @Override
     public void draw(Canvas canvas) {
         Face face = this.face;
@@ -75,8 +79,8 @@ public class FaceContourGraphic extends GraphicOverlay.Graphic {
         canvas.drawText("id: " + face.getTrackingId(), x + ID_X_OFFSET, y + ID_Y_OFFSET, idPaint);
 
         // Draws a bounding box around the face.
-        float xOffset = scaleX(face.getBoundingBox().width() / 2.0f);
-        float yOffset = scaleY(face.getBoundingBox().height() / 2.0f);
+        float xOffset = translateX(face.getBoundingBox().width() / 2.0f);
+        float yOffset = translateY(face.getBoundingBox().height() / 2.0f);
         float left = x - xOffset;
         float top = y - yOffset;
         float right = x + xOffset;
@@ -94,7 +98,7 @@ public class FaceContourGraphic extends GraphicOverlay.Graphic {
 
         if (face.getSmilingProbability() != null) {
             canvas.drawText(
-                    "happiness: " + String.format("%.2f", face.getSmilingProbability()),
+                    "happiness: " + format("%.2f", face.getSmilingProbability()),
                     x + ID_X_OFFSET * 3,
                     y - ID_Y_OFFSET,
                     idPaint);
@@ -102,14 +106,14 @@ public class FaceContourGraphic extends GraphicOverlay.Graphic {
 
         if (face.getRightEyeOpenProbability() != null) {
             canvas.drawText(
-                    "right eye: " + String.format("%.2f", face.getRightEyeOpenProbability()),
+                    "right eye: " + format("%.2f", face.getRightEyeOpenProbability()),
                     x - ID_X_OFFSET,
                     y,
                     idPaint);
         }
         if (face.getLeftEyeOpenProbability() != null) {
             canvas.drawText(
-                    "left eye: " + String.format("%.2f", face.getLeftEyeOpenProbability()),
+                    "left eye: " + format("%.2f", face.getLeftEyeOpenProbability()),
                     x + ID_X_OFFSET * 6,
                     y,
                     idPaint);

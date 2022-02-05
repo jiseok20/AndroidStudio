@@ -3,11 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.test4">
 
+    <uses-sdk tools:overrideLibrary="androidx.camera.camera2, androidx.camera.core,androidx.camera.view, androidx.camera.lifecycle" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
@@ -25,7 +29,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TEST4"
         android:usesCleartextTraffic="true">
-
+        <activity
+            android:name=".MLKIT.SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MLKIT.LivePreviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MLKIT.CameraXLivePreviewActivity"
+            android:exported="false" />
         <activity
             android:name=".QRScanActivity"
             android:exported="false" />
@@ -55,7 +67,6 @@
             android:name=".MainActivity"
             android:exported="false" />
 
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.test4"
@@ -72,8 +83,12 @@
                 android:value="false" />
         </provider>
 
-        <meta-data android:name="com.google.mlkit.vision.DEPENDENCIES"
-            android:value="face"/>
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="face" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <service android:name=".MusicService" />
         <service

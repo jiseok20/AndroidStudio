@@ -116,6 +116,7 @@ public class CameraActivity2 extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() { //button 누르면 사진 촬영
             @Override
             public void onClick(View view) {
+
                 takePicture();
             }
         });
@@ -126,6 +127,7 @@ public class CameraActivity2 extends AppCompatActivity {
         mMagnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         deviceOrientation = new DeviceOrientation();
         mGraphicOverlay = findViewById(R.id.graphic_overlay);
+
         initSurfaceView();
 
     }
@@ -156,7 +158,9 @@ public class CameraActivity2 extends AppCompatActivity {
 
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
+
                 initCameraAndPreview();
+
             }
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
@@ -209,11 +213,12 @@ public class CameraActivity2 extends AppCompatActivity {
         public void onImageAvailable(ImageReader reader) {
 
             Image image = reader.acquireNextImage();
+
             ByteBuffer buffer = image.getPlanes()[0].getBuffer();
             byte[] bytes = new byte[buffer.remaining()];
             buffer.get(bytes);
             final Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-            int rotation = 180;
+            int rotation = 0;
             try {
                 rotation = getRotationCompensation();
             } catch (CameraAccessException e) {
@@ -466,6 +471,7 @@ public class CameraActivity2 extends AppCompatActivity {
 
     private void detectFaces(InputImage image){
         Toast.makeText(this, "사진을 전송했습니다.", Toast.LENGTH_SHORT).show();
+
         FaceDetectorOptions realTimeOpts =
                 new FaceDetectorOptions.Builder()
                         .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
