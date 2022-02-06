@@ -1,6 +1,7 @@
 package com.example.test4.MLKIT;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.util.Log;
 
@@ -8,15 +9,15 @@ import androidx.annotation.NonNull;
 
 import com.example.test4.GraphicOverlay;
 import com.google.android.gms.tasks.Task;
+import com.google.mlkit.common.MlKitException;
 import com.google.mlkit.vision.common.InputImage;
-import com.example.test4.MLKIT.VisionProcessorBase;
-import com.example.test4.MLKIT.PreferenceUtils;
 import com.google.mlkit.vision.face.Face;
 import com.google.mlkit.vision.face.FaceDetection;
 import com.google.mlkit.vision.face.FaceDetector;
 import com.google.mlkit.vision.face.FaceDetectorOptions;
 import com.google.mlkit.vision.face.FaceLandmark;
 
+import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.Locale;
 
@@ -31,6 +32,16 @@ public class FaceDetectorProcessor extends VisionProcessorBase<List<Face>> {
         FaceDetectorOptions faceDetectorOptions = PreferenceUtils.getFaceDetectorOptions(context);
         Log.v(MANUAL_TESTING_LOG, "Face detector options: " + faceDetectorOptions);
         detector = FaceDetection.getClient(faceDetectorOptions);
+    }
+
+    @Override
+    public void processBitmap(Bitmap bitmap, GraphicOverlay graphicOverlay) {
+
+    }
+
+    @Override
+    public void processByteBuffer(ByteBuffer data, FrameMetadata frameMetadata, GraphicOverlay graphicOverlay) throws MlKitException {
+
     }
 
     @Override

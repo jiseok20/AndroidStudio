@@ -12,8 +12,6 @@
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.any" />
@@ -31,9 +29,6 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".MLKIT.SettingsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MLKIT.LivePreviewActivity"
             android:exported="false" />
         <activity
             android:name=".MLKIT.CameraXLivePreviewActivity"
@@ -54,9 +49,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".CameraActivity2"
-            android:exported="false" />
         <activity
             android:name=".WebActivity"
             android:exported="false" />

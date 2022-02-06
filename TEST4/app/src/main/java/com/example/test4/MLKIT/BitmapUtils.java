@@ -100,8 +100,6 @@ public class BitmapUtils {
         int rotationDegrees = 0;
         boolean flipX = false;
         boolean flipY = false;
-        // See e.g. https://magnushoff.com/articles/jpeg-orientation/ for a detailed explanation on each
-        // orientation.
         switch (orientation) {
             case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
                 flipX = true;
@@ -136,9 +134,7 @@ public class BitmapUtils {
     }
 
     private static int getExifOrientationTag(ContentResolver resolver, Uri imageUri) {
-        // We only support parsing EXIF orientation tag from local file on the device.
-        // See also:
-        // https://android-developers.googleblog.com/2016/12/introducing-the-exifinterface-support-library.html
+
         if (!ContentResolver.SCHEME_CONTENT.equals(imageUri.getScheme())
                 && !ContentResolver.SCHEME_FILE.equals(imageUri.getScheme())) {
             return 0;

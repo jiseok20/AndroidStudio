@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.example.test4.MLKIT.LivePreviewActivity;
+import com.example.test4.MLKIT.CameraXLivePreviewActivity;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -34,7 +34,7 @@ public class QRScanActivity extends AppCompatActivity {
                 // todo
             } else {
                 Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(QRScanActivity.this, LivePreviewActivity.class);
+                Intent intent = new Intent(QRScanActivity.this, CameraXLivePreviewActivity.class);
                 startActivity(intent);
                 // todo
             }

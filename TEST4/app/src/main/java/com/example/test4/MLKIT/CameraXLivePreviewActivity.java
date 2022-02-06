@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
@@ -14,10 +13,10 @@ import android.util.Size;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
+
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.Spinner;
+
 import android.widget.Toast;
 import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
@@ -35,30 +34,32 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory;
 import com.google.android.gms.common.annotation.KeepName;
 import com.google.mlkit.common.MlKitException;
-import com.google.mlkit.common.model.LocalModel;
+
 import com.example.test4.MLKIT.CameraXViewModel;
 import com.example.test4.GraphicOverlay;
 import com.example.test4.R;
 import com.example.test4.MLKIT.VisionImageProcessor;
-
 import com.example.test4.MLKIT.FaceDetectorProcessor;
 import com.example.test4.MLKIT.PreferenceUtils;
 import com.example.test4.MLKIT.SettingsActivity;
-
+import com.google.mlkit.vision.label.custom.CustomImageLabelerOptions;
+import com.google.mlkit.vision.label.defaults.ImageLabelerOptions;
+import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions;
 import java.util.ArrayList;
 import java.util.List;
 
-@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+
+import java.util.ArrayList;
+import java.util.List;
+@KeepName
+@RequiresApi(VERSION_CODES.LOLLIPOP)
 public final class CameraXLivePreviewActivity extends AppCompatActivity
-        implements ActivityCompat.OnRequestPermissionsResultCallback,
-        AdapterView.OnItemSelectedListener,
+        implements OnRequestPermissionsResultCallback,
+        OnItemSelectedListener,
         CompoundButton.OnCheckedChangeListener {
     private static final String TAG = "CameraXLivePreview";
     private static final int PERMISSION_REQUESTS = 1;
-
-
     private static final String FACE_DETECTION = "Face Detection";
-
 
     private static final String STATE_SELECTED_MODEL = "selected_model";
 
@@ -72,7 +73,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
     private boolean needUpdateGraphicOverlayImageSourceInfo;
 
     private String selectedModel = FACE_DETECTION;
-    private int lensFacing = CameraSelector.LENS_FACING_BACK;
+    private int lensFacing = CameraSelector.LENS_FACING_FRONT;
     private CameraSelector cameraSelector;
 
     @Override
@@ -95,23 +96,11 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
             Log.d(TAG, "graphicOverlay is null");
         }
 
-        Spinner spinner = findViewById(R.id.spinner);
-        List<String> options = new ArrayList<>();
 
-        options.add(FACE_DETECTION);
-
-        // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, R.layout.spinner_style, options);
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // attaching data adapter to spinner
-        spinner.setAdapter(dataAdapter);
-        spinner.setOnItemSelectedListener(this);
-
-        ToggleButton facingSwitch = findViewById(R.id.facing_switch);
+        ToggleButton facingSwitch = findViewById(R.id.facing_switch_X);
         facingSwitch.setOnCheckedChangeListener(this);
 
-        new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()))
+        new ViewModelProvider(this, AndroidViewModelFactory.getInstance(getApplication()))
                 .get(CameraXViewModel.class)
                 .getProcessCameraProvider()
                 .observe(
@@ -123,7 +112,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
                             }
                         });
 
-        ImageView settingsButton = findViewById(R.id.settings_button);
+        ImageView settingsButton = findViewById(R.id.settings_button_X);
         settingsButton.setOnClickListener(
                 v -> {
                     Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
@@ -251,15 +240,11 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
         }
 
         try {
-            switch (selectedModel) {
-
-                case FACE_DETECTION:
-                    Log.i(TAG, "Using Face Detector Processor");
-                    imageProcessor = new FaceDetectorProcessor(this);
-                    break;
-
-                default:
-                    throw new IllegalStateException("Invalid model name");
+            if (FACE_DETECTION.equals(selectedModel)) {
+                Log.i(TAG, "Using Face Detector Processor");
+                imageProcessor = new FaceDetectorProcessor(this);
+            } else {
+                throw new IllegalStateException("Invalid model name");
             }
         } catch (Exception e) {
             Log.e(TAG, "Can not create image processor: " + selectedModel, e);

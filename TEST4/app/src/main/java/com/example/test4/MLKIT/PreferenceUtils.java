@@ -8,11 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.camera.core.CameraSelector;
-import com.google.android.gms.common.images.Size;
 import com.google.common.base.Preconditions;
-import com.google.mlkit.common.model.LocalModel;
-import com.example.test4.MLKIT.CameraSource;
-import com.example.test4.MLKIT.CameraSource.SizePair;
 import com.example.test4.R;
 import com.google.mlkit.vision.face.FaceDetectorOptions;
 
@@ -27,30 +23,7 @@ public class PreferenceUtils {
                 .apply();
     }
 
-    @Nullable
-    public static SizePair getCameraPreviewSizePair(Context context, int cameraId) {
-        Preconditions.checkArgument(
-                cameraId == CameraSource.CAMERA_FACING_BACK
-                        || cameraId == CameraSource.CAMERA_FACING_FRONT);
-        String previewSizePrefKey;
-        String pictureSizePrefKey;
-        if (cameraId == CameraSource.CAMERA_FACING_BACK) {
-            previewSizePrefKey = context.getString(R.string.pref_key_rear_camera_preview_size);
-            pictureSizePrefKey = context.getString(R.string.pref_key_rear_camera_picture_size);
-        } else {
-            previewSizePrefKey = context.getString(R.string.pref_key_front_camera_preview_size);
-            pictureSizePrefKey = context.getString(R.string.pref_key_front_camera_picture_size);
-        }
 
-        try {
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-            return new SizePair(
-                    Size.parseSize(sharedPreferences.getString(previewSizePrefKey, null)),
-                    Size.parseSize(sharedPreferences.getString(pictureSizePrefKey, null)));
-        } catch (Exception e) {
-            return null;
-        }
-    }
 
     @RequiresApi(VERSION_CODES.LOLLIPOP)
     @Nullable
@@ -75,6 +48,7 @@ public class PreferenceUtils {
         String prefKey = context.getString(R.string.pref_key_info_hide);
         return sharedPreferences.getBoolean(prefKey, false);
     }
+
 
 
     public static FaceDetectorOptions getFaceDetectorOptions(Context context) {
@@ -123,55 +97,8 @@ public class PreferenceUtils {
     }
 
 
-    public static boolean shouldGroupRecognizedTextInBlocks(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String prefKey = context.getString(R.string.pref_key_group_recognized_text_in_blocks);
-        return sharedPreferences.getBoolean(prefKey, false);
-    }
 
-    public static boolean showLanguageTag(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String prefKey = context.getString(R.string.pref_key_show_language_tag);
-        return sharedPreferences.getBoolean(prefKey, false);
-    }
 
-    public static boolean shouldShowPoseDetectionInFrameLikelihoodLivePreview(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String prefKey =
-                context.getString(R.string.pref_key_live_preview_pose_detector_show_in_frame_likelihood);
-        return sharedPreferences.getBoolean(prefKey, true);
-    }
-
-    public static boolean shouldShowPoseDetectionInFrameLikelihoodStillImage(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String prefKey =
-                context.getString(R.string.pref_key_still_image_pose_detector_show_in_frame_likelihood);
-        return sharedPreferences.getBoolean(prefKey, true);
-    }
-
-    public static boolean shouldPoseDetectionVisualizeZ(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String prefKey = context.getString(R.string.pref_key_pose_detector_visualize_z);
-        return sharedPreferences.getBoolean(prefKey, true);
-    }
-
-    public static boolean shouldPoseDetectionRescaleZForVisualization(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String prefKey = context.getString(R.string.pref_key_pose_detector_rescale_z);
-        return sharedPreferences.getBoolean(prefKey, true);
-    }
-
-    public static boolean shouldPoseDetectionRunClassification(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String prefKey = context.getString(R.string.pref_key_pose_detector_run_classification);
-        return sharedPreferences.getBoolean(prefKey, false);
-    }
-
-    public static boolean shouldSegmentationEnableRawSizeMask(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String prefKey = context.getString(R.string.pref_key_segmentation_raw_size_mask);
-        return sharedPreferences.getBoolean(prefKey, false);
-    }
 
     /**
      * Mode type preference is backed by {@link android.preference.ListPreference} which only support
