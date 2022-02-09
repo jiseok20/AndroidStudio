@@ -33,7 +33,7 @@ public class QRScanActivity extends AppCompatActivity {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
                 // todo
             } else {
-                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Room Number: " + result.getContents(), Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(QRScanActivity.this, CameraXLivePreviewActivity.class);
                 startActivity(intent);
                 // todo

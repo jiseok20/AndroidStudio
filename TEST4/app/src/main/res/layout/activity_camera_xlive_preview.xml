@@ -11,7 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/control"/>
+        app:layout_constraintBottom_toTopOf="@+id/control">
+
+    </androidx.camera.view.PreviewView>
 
     <com.example.test4.GraphicOverlay
         android:id="@+id/graphic_overlay"
@@ -33,21 +35,10 @@
     <LinearLayout
         android:id="@id/control"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         android:background="#000"
         android:orientation="horizontal">
-
-        <ToggleButton
-            android:id="@+id/facing_switch_X"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center_vertical"
-            android:background="@android:drawable/ic_menu_camera"
-            android:checked="false"
-            android:textOff=""
-            android:textOn=""/>
-
 
     </LinearLayout>
 

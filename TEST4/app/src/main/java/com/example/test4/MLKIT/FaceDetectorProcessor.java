@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -26,7 +27,6 @@ public class FaceDetectorProcessor extends VisionProcessorBase<List<Face>> {
     private static final String TAG = "FaceDetectorProcessor";
 
     private final FaceDetector detector;
-
     public FaceDetectorProcessor(Context context) {
         super(context);
         FaceDetectorOptions faceDetectorOptions = PreferenceUtils.getFaceDetectorOptions(context);
@@ -61,6 +61,8 @@ public class FaceDetectorProcessor extends VisionProcessorBase<List<Face>> {
             graphicOverlay.add(new FaceGraphic(graphicOverlay, face));
             logExtrasForTesting(face);
         }
+
+
     }
 
     private static void logExtrasForTesting(Face face) {

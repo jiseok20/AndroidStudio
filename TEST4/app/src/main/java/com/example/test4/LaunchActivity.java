@@ -36,7 +36,7 @@ public class LaunchActivity extends AppCompatActivity {
 
     // 여기서부터는 퍼미션 관련 코드입니다.
     static final int PERMISSIONS_REQUEST_CODE = 1000;
-    String[] PERMISSIONS  = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    String[] PERMISSIONS  = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE};
 
     private boolean hasPermissions(String[] permissions) {
         int result;
