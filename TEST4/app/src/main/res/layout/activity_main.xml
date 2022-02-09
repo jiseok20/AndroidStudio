@@ -5,157 +5,66 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/black"
+    android:gravity="center"
     tools:context=".MainActivity"
     >
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="이름과 학번을 입력해주세요"
-        android:textColor="#00BCD4"
-        android:textSize="20sp"/>
 
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:hint="이름을 입력하세요.."
+    <ImageView
+        android:id="@+id/gif_image"
+        android:layout_width="wrap_content"
+        android:layout_height="400dp"
+        android:src="@drawable/ic_launcher_background"
+        />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    >
 
+    <Button
+        android:id="@+id/btn_join"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="40dp"
+        android:text="등 록"
         />
 
-    <EditText
-        android:id="@+id/grade_number"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:hint="학번을 입력하세요.."
-
-        />
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/btn_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="login"
-
-            />
-
-        <ImageView
-            android:id="@+id/btn_img"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@mipmap/ic_launcher"
-
-            />
-        <com.github.ybq.android.spinkit.SpinKitView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/spin_kit"
-            style="@style/SpinKitView.CubeGrid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:SpinKit_Color="#4CAF50" />
-
-        <Button
-            android:id="@+id/btn_webview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="WebView"
-
-            />
-
-        <Button
-            android:id="@+id/btn_QR"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="출입"/>
-
-
-    </LinearLayout>
-
-    <ListView
-        android:id="@+id/list_string"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        >
-
-        <Button
-            android:id="@+id/btn_start"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Thread start" />
-
-        <Button
-            android:id="@+id/btn_stop"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Thread stop"
-            />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        >
-
-        <Button
-            android:id="@+id/btn_music_start"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="music start"
-            />
-        <Button
-            android:id="@+id/btn_music_stop"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="music stop"/>
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
-            android:entries="@array/testarray">
-
-        </Spinner>
-
-        <TextView
-            android:id="@+id/array_result"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="dropdown result"/>
-
-
-
-    </LinearLayout>
+    <Button
+        android:id="@+id/btn_QR"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="40dp"
+        android:text="출 입" />
 
 
 </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        >
+
+        <Button
+            android:id="@+id/btn_search"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="40dp"
+            android:text="조 회"/>
+
+        <Button
+            android:id="@+id/btn_covid"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="40dp"
+            android:text="확 진"/>
+
+    </LinearLayout>
+
+
+
+    </LinearLayout>
