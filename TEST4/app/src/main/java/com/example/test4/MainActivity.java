@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         btn_img = findViewById(R.id.gif_image);
-        Glide.with(this).load(R.drawable.cancer).into(btn_img);
+        Glide.with(this).load(R.drawable.circle).into(btn_img);
 
         btn_QR=findViewById(R.id.btn_QR); //출입
         btn_join=findViewById(R.id.btn_join); //등록

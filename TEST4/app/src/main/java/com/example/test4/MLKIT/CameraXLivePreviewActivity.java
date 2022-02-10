@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -329,12 +330,8 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                long timestamp = System.currentTimeMillis();
-                Date date = new Date(timestamp);
-                SimpleDateFormat now = new SimpleDateFormat("yyyyMMddHHmmss",Locale.KOREA);
-                String getTime = now.format(date);
                 ContentValues contentValues = new ContentValues();
-                contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, getTime);
+                contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "face");
                 contentValues.put(MediaStore.MediaColumns.MIME_TYPE,"image/jpeg");
 
                 if (Build.VERSION.SDK_INT >= VERSION_CODES.P) {
