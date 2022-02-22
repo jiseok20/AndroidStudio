@@ -241,6 +241,10 @@ public class FaceGraphic extends GraphicOverlay.Graphic {
         drawFaceLandmark(canvas, FaceLandmark.RIGHT_EYE);
         drawFaceLandmark(canvas, FaceLandmark.LEFT_CHEEK);
         drawFaceLandmark(canvas, FaceLandmark.RIGHT_CHEEK);
+        drawFaceLandmark(canvas, FaceLandmark.MOUTH_BOTTOM);
+        drawFaceLandmark(canvas, FaceLandmark.MOUTH_LEFT);
+        drawFaceLandmark(canvas, FaceLandmark.MOUTH_RIGHT);
+        drawFaceLandmark(canvas, FaceLandmark.NOSE_BASE);
     }
 
     private void drawFaceLandmark(Canvas canvas, @LandmarkType int landmarkType) {
