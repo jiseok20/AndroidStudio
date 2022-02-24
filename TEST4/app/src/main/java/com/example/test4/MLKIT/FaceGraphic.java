@@ -3,18 +3,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
-import android.os.Build;
-import android.widget.Toast;
-
-import androidx.annotation.RequiresApi;
-
 import com.example.test4.GraphicOverlay;
 import com.google.mlkit.vision.face.Face;
 import com.google.mlkit.vision.face.FaceContour;
 import com.google.mlkit.vision.face.FaceLandmark;
 import com.google.mlkit.vision.face.FaceLandmark.LandmarkType;
 import java.util.Locale;
-import java.util.logging.Handler;
 
 public class FaceGraphic extends GraphicOverlay.Graphic {
     private static final float FACE_POSITION_RADIUS = 8.0f;
@@ -74,7 +68,6 @@ public class FaceGraphic extends GraphicOverlay.Graphic {
     }
 
     /** Draws the face annotations for position on the supplied canvas. */
-    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     public void draw(Canvas canvas) {
         Face face = this.face;
@@ -119,8 +112,6 @@ public class FaceGraphic extends GraphicOverlay.Graphic {
         }
         if (face.getRightEyeOpenProbability() != null) {
             yLabelOffset -= lineHeight;
-            Toast.makeText(CameraXLivePreviewActivity.Mcontext,"얼굴 인식 중입니다",Toast.LENGTH_SHORT).show();
-            ((CameraXLivePreviewActivity)CameraXLivePreviewActivity.Mcontext).bindImageCaptureCase();
             textWidth =
                     Math.max(
                             textWidth,
@@ -241,10 +232,6 @@ public class FaceGraphic extends GraphicOverlay.Graphic {
         drawFaceLandmark(canvas, FaceLandmark.RIGHT_EYE);
         drawFaceLandmark(canvas, FaceLandmark.LEFT_CHEEK);
         drawFaceLandmark(canvas, FaceLandmark.RIGHT_CHEEK);
-        drawFaceLandmark(canvas, FaceLandmark.MOUTH_BOTTOM);
-        drawFaceLandmark(canvas, FaceLandmark.MOUTH_LEFT);
-        drawFaceLandmark(canvas, FaceLandmark.MOUTH_RIGHT);
-        drawFaceLandmark(canvas, FaceLandmark.NOSE_BASE);
     }
 
     private void drawFaceLandmark(Canvas canvas, @LandmarkType int landmarkType) {

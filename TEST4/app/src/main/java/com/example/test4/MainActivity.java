@@ -9,15 +9,15 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-
-
+import com.example.test4.FCM.httpsconnectionActivity;
+import com.example.test4.firestoreDB.InputActivity;
+import com.example.test4.firestoreDB.SearchActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private Button btn_QR,btn_join,btn_search,btn_covid;
     private long backBtnTime=0;
     ImageView btn_img;
     boolean isThread = false;
@@ -42,28 +42,50 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         btn_img = findViewById(R.id.gif_image);
+        btn_img.setOnClickListener((this));
         Glide.with(this).load(R.drawable.circle).into(btn_img);
 
-        btn_QR=findViewById(R.id.btn_QR); //출입
-        btn_join=findViewById(R.id.btn_join); //등록
-        btn_search=findViewById(R.id.btn_search); // 조회
-        btn_covid=findViewById(R.id.btn_covid); //확진
+        Button btn_QR = (Button) findViewById(R.id.btn_QR); //출입
+        btn_QR.setOnClickListener((this));
 
-        btn_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,CreditActivity.class);
-                startActivity(intent);
-            }
-        });
+        Button btn_join = (Button)findViewById(R.id.btn_join); //등록
+        btn_join.setOnClickListener((this));
 
-        btn_QR.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,QRScanActivity.class);
-                startActivity(intent);
-            }
-        });
+        Button btn_search = (Button)findViewById(R.id.btn_search); // 조회
+        btn_search.setOnClickListener((this));
+
+        Button btn_covid = (Button)findViewById(R.id.btn_covid); //확진
+        btn_covid.setOnClickListener((this));
+
+    }
+    @Override
+    public void onClick(View view)
+    {
+        switch (view.getId())
+        {
+            case R.id.btn_QR: // 출입
+                Intent i=new Intent(this, QRScanActivity.class );
+                startActivity(i);
+                break;
+            case R.id.gif_image: // 크레딧
+                i=new Intent(this, CreditActivity.class );
+                startActivity(i);
+                break;
+            case R.id.btn_join: //등록
+                i=new Intent(this, InputActivity.class );
+                startActivity(i);
+                break;
+            case R.id.btn_search: // 조회
+                i=new Intent(this, SearchActivity.class );
+                startActivity(i);
+                break;
+            case R.id.btn_covid: // 확진
+                i=new Intent(this, httpsconnectionActivity.class );
+                startActivity(i);
+                break;
+            default:
+            break;
+        }
 
     }
 }

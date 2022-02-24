@@ -9,10 +9,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission
-        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="28" />
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.any" />
@@ -22,15 +21,44 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_main"
-        android:label="Access Management"
-        android:requestLegacyExternalStorage="true"
-        android:roundIcon="@mipmap/ic_main_round"
+        android:icon="@mipmap/ic_launcher"
+        android:label="YOUTUBE_EXAMPLE"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TEST4"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".firestoreDB.InputActivity"
+            android:exported="false" />
+        <activity
             android:name=".CreditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".firestorage.DownloadActivity"
+            android:exported="false" />
+        <activity
+            android:name=".firestorage.UploadActivity"
+            android:exported="false" />
+        <activity
+            android:name=".firestorage.MetaInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".firestorage.CloudStorageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".firestoreDB.FirestoreActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fireAUTH.FirebaseUIActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fireAUTH.AuthActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FCM.httpsconnectionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FCM.CloudMessagingActivity"
             android:exported="false" />
         <activity
             android:name=".MLKIT.SettingsActivity"
@@ -46,6 +74,10 @@
             android:screenOrientation="fullSensor"
             tools:replace="screenOrientation" />
         <activity
+            android:name=".firestoreDB.SearchActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".LaunchActivity"
             android:exported="true">
             <intent-filter>
@@ -58,21 +90,38 @@
             android:name=".MainActivity"
             android:exported="false" />
 
-        <meta-data
-            android:name="firebase_messaging_auto_init_enabled"
-            android:value="false" />
-        <meta-data
-            android:name="firebase_analytics_collection_enabled"
-            android:value="false" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.test4"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+            <meta-data
+                android:name="firebase_messaging_auto_init_enabled"
+                android:value="false" />
+            <meta-data
+                android:name="firebase_analytics_collection_enabled"
+                android:value="false" />
+        </provider>
+
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
             android:value="face" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="firebase_messaging_auto_init_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false" />
 
         <service
-            android:name=".MyFirebaseMessagingService"
+            android:name=".FCM.MyFirebaseMessagingService"
+            android:directBootAware="true"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

@@ -1,28 +1,19 @@
 package com.example.test4.MLKIT;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.media.Image;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Environment;
-import android.os.Handler;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.util.Size;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 
@@ -33,8 +24,6 @@ import androidx.annotation.RequiresApi;
 import androidx.camera.core.CameraInfoUnavailableException;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageAnalysis;
-import androidx.camera.core.ImageCapture;
-import androidx.camera.core.ImageCaptureException;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
@@ -45,17 +34,23 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory;
 import com.google.android.gms.common.annotation.KeepName;
 import com.google.mlkit.common.MlKitException;
+
+import com.example.test4.MLKIT.CameraXViewModel;
 import com.example.test4.GraphicOverlay;
 import com.example.test4.R;
-import java.io.File;
-import java.text.SimpleDateFormat;
+import com.example.test4.MLKIT.VisionImageProcessor;
+import com.example.test4.MLKIT.FaceDetectorProcessor;
+import com.example.test4.MLKIT.PreferenceUtils;
+import com.example.test4.MLKIT.SettingsActivity;
+import com.google.mlkit.vision.label.custom.CustomImageLabelerOptions;
+import com.google.mlkit.vision.label.defaults.ImageLabelerOptions;
+import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
+
+import java.util.ArrayList;
+import java.util.List;
 @KeepName
 @RequiresApi(VERSION_CODES.LOLLIPOP)
 public final class CameraXLivePreviewActivity extends AppCompatActivity
@@ -65,15 +60,14 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
     private static final String TAG = "CameraXLivePreview";
     private static final int PERMISSION_REQUESTS = 1;
     private static final String FACE_DETECTION = "Face Detection";
-    public static Context Mcontext;
+
     private static final String STATE_SELECTED_MODEL = "selected_model";
 
-    PreviewView previewView;
+    private PreviewView previewView;
     private GraphicOverlay graphicOverlay;
 
     @Nullable private ProcessCameraProvider cameraProvider;
     @Nullable private Preview previewUseCase;
-    @Nullable private ImageCapture captureUseCase;
     @Nullable private ImageAnalysis analysisUseCase;
     @Nullable private VisionImageProcessor imageProcessor;
     private boolean needUpdateGraphicOverlayImageSourceInfo;
@@ -93,9 +87,6 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
         cameraSelector = new CameraSelector.Builder().requireLensFacing(lensFacing).build();
 
         setContentView(R.layout.activity_camera_xlive_preview);
-
-        Mcontext = this;
-
         previewView = findViewById(R.id.preview_view);
         if (previewView == null) {
             Log.d(TAG, "previewView is null");
@@ -106,8 +97,8 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
         }
 
 
-        //ToggleButton facingSwitch = findViewById(R.id.facing_switch_X);
-        //facingSwitch.setOnCheckedChangeListener(this);
+        ToggleButton facingSwitch = findViewById(R.id.facing_switch_X);
+        facingSwitch.setOnCheckedChangeListener(this);
 
         new ViewModelProvider(this, AndroidViewModelFactory.getInstance(getApplication()))
                 .get(CameraXViewModel.class)
@@ -130,9 +121,6 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
                             SettingsActivity.LaunchSource.CAMERAX_LIVE_PREVIEW);
                     startActivity(intent);
                 });
-
-
-
 
         if (!allPermissionsGranted()) {
             getRuntimePermissions();
@@ -219,9 +207,6 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
         }
     }
 
-
-
-
     private void bindPreviewUseCase() {
         if (!PreferenceUtils.isCameraLiveViewportEnabled(this)) {
             return;
@@ -270,12 +255,14 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
                     .show();
             return;
         }
+
         ImageAnalysis.Builder builder = new ImageAnalysis.Builder();
         Size targetResolution = PreferenceUtils.getCameraXTargetResolution(this, lensFacing);
         if (targetResolution != null) {
             builder.setTargetResolution(targetResolution);
         }
         analysisUseCase = builder.build();
+
         needUpdateGraphicOverlayImageSourceInfo = true;
         analysisUseCase.setAnalyzer(
                 // imageProcessor.processImageProxy will use another thread to run the detection underneath,
@@ -296,7 +283,6 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
                     }
                     try {
                         imageProcessor.processImageProxy(imageProxy, graphicOverlay);
-
                     } catch (MlKitException e) {
                         Log.e(TAG, "Failed to process image. Error: " + e.getLocalizedMessage());
                         Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT)
@@ -305,57 +291,6 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
                 });
 
         cameraProvider.bindToLifecycle(/* lifecycleOwner= */ this, cameraSelector, analysisUseCase);
-    }
-
-    @RequiresApi(api = VERSION_CODES.P)
-    public void bindImageCaptureCase() {
-        if (cameraProvider == null) {
-            return;
-        }
-        if (captureUseCase != null) {
-            cameraProvider.unbind(captureUseCase);
-        }
-        if (imageProcessor != null) {
-            imageProcessor.stop();
-        }
-        ImageCapture.Builder builder = new ImageCapture.Builder();
-        Size targetResolution = PreferenceUtils.getCameraXTargetResolution(this, lensFacing);
-        if (targetResolution != null) {
-            builder.setTargetResolution(targetResolution);
-        }
-
-        captureUseCase = builder.build();
-        cameraProvider.bindToLifecycle(/* lifecycleOwner= */ this, cameraSelector, captureUseCase);
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                ContentValues contentValues = new ContentValues();
-                contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "face");
-                contentValues.put(MediaStore.MediaColumns.MIME_TYPE,"image/jpeg");
-
-                if (Build.VERSION.SDK_INT >= VERSION_CODES.P) {
-                    captureUseCase.takePicture(new ImageCapture.OutputFileOptions.Builder(getContentResolver()
-                                    , MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                                    contentValues).build(),
-                            getMainExecutor(), new ImageCapture.OnImageSavedCallback() {
-                                @Override
-                                public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
-                                    Toast.makeText(CameraXLivePreviewActivity.this,"take picture",Toast.LENGTH_SHORT).show();
-                                    graphicOverlay.clear();
-                                    bindAnalysisUseCase();
-                                }
-
-                                @Override
-                                public void onError(@NonNull ImageCaptureException exception) {
-                                    exception.printStackTrace();
-
-                                }
-                            });
-                }
-
-            }
-        },2000);
     }
 
     private String[] getRequiredPermissions() {
