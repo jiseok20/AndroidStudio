@@ -1,9 +1,11 @@
 package com.example.test4.MLKIT;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.AssetFileDescriptor;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
@@ -32,6 +34,8 @@ import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory;
+
+import com.example.test4.ml.ConvertedModel;
 import com.google.android.gms.common.annotation.KeepName;
 import com.google.mlkit.common.MlKitException;
 
@@ -42,9 +46,20 @@ import com.example.test4.MLKIT.VisionImageProcessor;
 import com.example.test4.MLKIT.FaceDetectorProcessor;
 import com.example.test4.MLKIT.PreferenceUtils;
 import com.example.test4.MLKIT.SettingsActivity;
+import com.google.mlkit.common.model.LocalModel;
 import com.google.mlkit.vision.label.custom.CustomImageLabelerOptions;
 import com.google.mlkit.vision.label.defaults.ImageLabelerOptions;
 import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions;
+import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions;
+
+import org.tensorflow.lite.DataType;
+import org.tensorflow.lite.Interpreter;
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +75,8 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
     private static final String TAG = "CameraXLivePreview";
     private static final int PERMISSION_REQUESTS = 1;
     private static final String FACE_DETECTION = "Face Detection";
-
+    private static final String OBJECT_DETECTION = "Object Detection";
+    private static final String OBJECT_DETECTION_CUSTOM = "Custom Object Detection";
     private static final String STATE_SELECTED_MODEL = "selected_model";
 
     private PreviewView previewView;
@@ -72,7 +88,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
     @Nullable private VisionImageProcessor imageProcessor;
     private boolean needUpdateGraphicOverlayImageSourceInfo;
 
-    private String selectedModel = FACE_DETECTION;
+    private String selectedModel = OBJECT_DETECTION;
     private int lensFacing = CameraSelector.LENS_FACING_FRONT;
     private CameraSelector cameraSelector;
 
@@ -82,7 +98,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
         Log.d(TAG, "onCreate");
 
         if (savedInstanceState != null) {
-            selectedModel = savedInstanceState.getString(STATE_SELECTED_MODEL, FACE_DETECTION);
+            selectedModel = savedInstanceState.getString(STATE_SELECTED_MODEL, OBJECT_DETECTION);
         }
         cameraSelector = new CameraSelector.Builder().requireLensFacing(lensFacing).build();
 
@@ -95,10 +111,6 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
         if (graphicOverlay == null) {
             Log.d(TAG, "graphicOverlay is null");
         }
-
-
-        ToggleButton facingSwitch = findViewById(R.id.facing_switch_X);
-        facingSwitch.setOnCheckedChangeListener(this);
 
         new ViewModelProvider(this, AndroidViewModelFactory.getInstance(getApplication()))
                 .get(CameraXViewModel.class)
@@ -240,9 +252,11 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
         }
 
         try {
-            if (FACE_DETECTION.equals(selectedModel)) {
-                Log.i(TAG, "Using Face Detector Processor");
-                imageProcessor = new FaceDetectorProcessor(this);
+            if (OBJECT_DETECTION.equals(selectedModel)) {
+                Log.i(TAG, "Using Object Detector Processor");
+                ObjectDetectorOptions objectDetectorOptions =
+                        PreferenceUtils.getObjectDetectorOptionsForLivePreview(this);
+                imageProcessor = new ObjectDetectorProcessor(this, objectDetectorOptions);
             } else {
                 throw new IllegalStateException("Invalid model name");
             }
@@ -350,5 +364,24 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
         }
         Log.i(TAG, "Permission NOT granted: " + permission);
         return false;
+    }
+
+    private Interpreter getTfliteInterpreter(String modelPath) {
+        try {
+            return new Interpreter(loadModelFile(CameraXLivePreviewActivity.this, modelPath));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public MappedByteBuffer loadModelFile(Activity activity, String modelPath) throws IOException {
+        AssetFileDescriptor fileDescriptor = activity.getAssets().openFd(modelPath);
+        FileInputStream inputStream = new FileInputStream(fileDescriptor.getFileDescriptor());
+        FileChannel fileChannel = inputStream.getChannel();
+        long startOffset = fileDescriptor.getStartOffset();
+        long declaredLength = fileDescriptor.getDeclaredLength();
+        return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength);
     }
 }

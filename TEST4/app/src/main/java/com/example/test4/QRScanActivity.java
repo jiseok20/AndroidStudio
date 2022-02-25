@@ -152,6 +152,8 @@ public class QRScanActivity extends AppCompatActivity implements View.OnClickLis
                         db.collection(placeName).document(date).set(PlaceTimeUser, SetOptions.merge());
                         Log.d("jang", "reg complete "+placeName+date);
                         finish();
+                        Intent intent=new Intent(QRScanActivity.this, CameraXLivePreviewActivity.class ); //마스크 인식 넘어가는 부분
+                        startActivity(intent);
 
                     } else {
                         String error = placeName+" is not found";

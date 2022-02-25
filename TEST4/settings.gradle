@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "TEST4"
 include ':app'
+include ':sdk'
