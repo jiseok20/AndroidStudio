@@ -1,6 +1,8 @@
 package com.example.test4;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +21,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private long backBtnTime=0;
+    public static Context Mcontext;
     ImageView btn_img;
     boolean isThread = false;
 

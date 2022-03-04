@@ -4,8 +4,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.util.Log;
+import android.widget.Toast;
+
 import com.example.test4.GraphicOverlay;
 import com.example.test4.GraphicOverlay.Graphic;
+import com.example.test4.MainActivity;
 import com.google.mlkit.vision.objects.DetectedObject;
 import com.google.mlkit.vision.objects.DetectedObject.Label;
 import java.util.Locale;
@@ -81,7 +85,14 @@ public class ObjectGraphic extends Graphic {
                                     String.format(
                                             Locale.US, LABEL_FORMAT, label.getConfidence() * 100, label.getIndex())));
             yLabelOffset -= 2 * lineHeight;
+            Log.d("A",label.getText());
+
+            if(label.getText().equals("1 With mask")){
+               ((CameraXLivePreviewActivity)CameraXLivePreviewActivity.Kcontext).comeback_home();
+            }
         }
+
+
 
         // Draws the bounding box.
         RectF rect = new RectF(object.getBoundingBox());

@@ -8,21 +8,20 @@ import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import android.os.Handler;
 import android.util.Log;
 import android.util.Size;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-
 import android.widget.Toast;
-import android.widget.ToggleButton;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraInfoUnavailableException;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageAnalysis;
@@ -35,26 +34,15 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory;
 
-import com.example.test4.ml.ConvertedModel;
+import com.example.test4.GraphicOverlay;
+import com.example.test4.MainActivity;
+import com.example.test4.R;
 import com.google.android.gms.common.annotation.KeepName;
 import com.google.mlkit.common.MlKitException;
-
-import com.example.test4.MLKIT.CameraXViewModel;
-import com.example.test4.GraphicOverlay;
-import com.example.test4.R;
-import com.example.test4.MLKIT.VisionImageProcessor;
-import com.example.test4.MLKIT.FaceDetectorProcessor;
-import com.example.test4.MLKIT.PreferenceUtils;
-import com.example.test4.MLKIT.SettingsActivity;
 import com.google.mlkit.common.model.LocalModel;
-import com.google.mlkit.vision.label.custom.CustomImageLabelerOptions;
-import com.google.mlkit.vision.label.defaults.ImageLabelerOptions;
 import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions;
-import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions;
 
-import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.Interpreter;
-import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -63,9 +51,6 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import java.util.ArrayList;
-import java.util.List;
 @KeepName
 @RequiresApi(VERSION_CODES.LOLLIPOP)
 public final class CameraXLivePreviewActivity extends AppCompatActivity
@@ -88,17 +73,19 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
     @Nullable private VisionImageProcessor imageProcessor;
     private boolean needUpdateGraphicOverlayImageSourceInfo;
 
-    private String selectedModel = OBJECT_DETECTION;
+    private String selectedModel = OBJECT_DETECTION_CUSTOM;
     private int lensFacing = CameraSelector.LENS_FACING_FRONT;
     private CameraSelector cameraSelector;
+    public static Context Kcontext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Kcontext=this;
         Log.d(TAG, "onCreate");
 
         if (savedInstanceState != null) {
-            selectedModel = savedInstanceState.getString(STATE_SELECTED_MODEL, OBJECT_DETECTION);
+            selectedModel = savedInstanceState.getString(STATE_SELECTED_MODEL, OBJECT_DETECTION_CUSTOM);
         }
         cameraSelector = new CameraSelector.Builder().requireLensFacing(lensFacing).build();
 
@@ -252,11 +239,20 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
         }
 
         try {
-            if (OBJECT_DETECTION.equals(selectedModel)) {
-                Log.i(TAG, "Using Object Detector Processor");
-                ObjectDetectorOptions objectDetectorOptions =
-                        PreferenceUtils.getObjectDetectorOptionsForLivePreview(this);
-                imageProcessor = new ObjectDetectorProcessor(this, objectDetectorOptions);
+            if (OBJECT_DETECTION_CUSTOM.equals(selectedModel)) {
+                Log.i(TAG, "Using Custom Object Detector Processor");
+                LocalModel localModel =
+                        new LocalModel.Builder()
+                                .setAssetFilePath("model2.tflite")
+                                .build();
+                CustomObjectDetectorOptions customObjectDetectorOptions =
+                        PreferenceUtils.getCustomObjectDetectorOptionsForLivePreview(this, localModel);
+                imageProcessor = new ObjectDetectorProcessor(this, customObjectDetectorOptions);
+
+//                Log.i(TAG, "Using Object Detector Processor");
+//                ObjectDetectorOptions objectDetectorOptions =
+//                        PreferenceUtils.getObjectDetectorOptionsForLivePreview(this);
+//                imageProcessor = new ObjectDetectorProcessor(this, objectDetectorOptions);
             } else {
                 throw new IllegalStateException("Invalid model name");
             }
@@ -383,5 +379,16 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
         long startOffset = fileDescriptor.getStartOffset();
         long declaredLength = fileDescriptor.getDeclaredLength();
         return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength);
+    }
+
+    public void comeback_home() {
+        Toast.makeText(this,"출입이 완료되었습니다",Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        },2000);
+
     }
 }
