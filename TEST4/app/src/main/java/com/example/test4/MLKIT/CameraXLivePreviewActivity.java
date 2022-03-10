@@ -111,7 +111,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
                             }
                         });
 
-        ImageView settingsButton = findViewById(R.id.settings_button_X);
+        /*ImageView settingsButton = findViewById(R.id.settings_button_X);
         settingsButton.setOnClickListener(
                 v -> {
                     Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
@@ -119,7 +119,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
                             SettingsActivity.EXTRA_LAUNCH_SOURCE,
                             SettingsActivity.LaunchSource.CAMERAX_LIVE_PREVIEW);
                     startActivity(intent);
-                });
+                });*/
 
         if (!allPermissionsGranted()) {
             getRuntimePermissions();

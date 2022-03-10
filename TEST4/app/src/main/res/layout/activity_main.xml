@@ -29,6 +29,9 @@
             android:layout_height="60dp"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="50dp"
+            android:textColor="@color/black"
+            android:backgroundTint="#F463E1"
+            android:textStyle="bold"
             android:text="등 록" />
 
         <Button
@@ -36,6 +39,9 @@
             android:layout_width="150dp"
             android:layout_height="60dp"
             android:layout_marginLeft="40dp"
+            android:textColor="@color/black"
+            android:backgroundTint="#F463E1"
+            android:textStyle="bold"
             android:layout_marginTop="50dp"
             android:text="출 입" />
 
@@ -54,7 +60,10 @@
             android:layout_height="60dp"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="50dp"
-            android:text="조 회" />
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:backgroundTint="#F463E1"
+            android:text="조 회"/>
 
         <Button
             android:id="@+id/btn_covid"
@@ -62,6 +71,9 @@
             android:layout_height="60dp"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="50dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:backgroundTint="#F463E1"
             android:text="확 진" />
 
     </LinearLayout>
