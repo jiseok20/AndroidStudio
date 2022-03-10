@@ -4,17 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b4e14316-1114-4b61-88f2-ac5136152b7c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/TEST4/app/src/main/java/com/example/test4/firestoreDB/PUItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TEST4/app/src/main/java/com/example/test4/firestoreDB/PUViewListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TEST4/app/src/main/java/com/example/test4/firestoreDB/PlaceUserAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TEST4/app/src/main/res/layout/memo_item_list.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TEST4/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TEST4/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TEST4/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TEST4/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TEST4/app/src/main/java/com/example/test4/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/TEST4/app/src/main/java/com/example/test4/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TEST4/app/src/main/java/com/example/test4/firestoreDB/registerActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/TEST4/app/src/main/java/com/example/test4/firestoreDB/SearchActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TEST4/app/src/main/res/layout/activity_register.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TEST4/app/src/main/res/layout/activity_search.xml" afterDir="false" />
-    </list>
+    <list default="true" id="b4e14316-1114-4b61-88f2-ac5136152b7c" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,6 +14,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="24wzR2xJZ0VLqtqNUCkfSa53ucr" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
