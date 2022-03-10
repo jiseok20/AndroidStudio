@@ -91,7 +91,6 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
 
         Button reguserbtn = (Button) findViewById(R.id.userbtn);
         reguserbtn.setOnClickListener(this);
-
     }
 
     private void regUser()
@@ -100,7 +99,6 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
         EditText numberedit = (EditText) findViewById(R.id.number);
         name=nameedit.getText().toString();
         number=numberedit.getText().toString();
-
 
         if (nameedit.getText().toString().length() == 0) {
             Toast.makeText(this, "성함을 입력해주세요",
@@ -128,9 +126,6 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
                         TokenReg();
                     }
                 });
-
-
-
     }
 
     private void TokenReg() {
@@ -191,34 +186,11 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
                     }
                 });
 
-
-//        DocumentReference docRef = db.collection("users").document(name+"-"+number);
-//        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    DocumentSnapshot document = task.getResult();
-//                    if (document.exists()) {
-//                        Log.d("jang", "DocumentSnapshot data: " + document.get("token"));
-//                    } else {
-//                        Log.d("jang", "No such document");
-//                    }
-//                } else {
-//                    Log.d("jang", "get failed with ", task.getException());
-//                }
-//            }
-//        });
-
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private void regPlace() {
-//        if (uid == null) {
-//            Toast.makeText(this,
-//                    "메모를 추가하기 위해서는 Firebase 인증이 되어야합니다. Firebase 인증 후 다시 진행해주세요.",
-//                    Toast.LENGTH_LONG).show();
-//            return;
-//        }
+
 
         EditText nameedit = (EditText) findViewById(R.id.inputname);
         EditText numberedit = (EditText) findViewById(R.id.number);

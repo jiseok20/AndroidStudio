@@ -88,7 +88,7 @@ public class ObjectGraphic extends Graphic {
             Log.d("A",label.getText());
 
             if(label.getText().equals("1 With mask")){
-               ((CameraXLivePreviewActivity)CameraXLivePreviewActivity.Kcontext).comeback_home();
+                ((CameraXLivePreviewActivity)CameraXLivePreviewActivity.Kcontext).comeback_home();
             }
         }
 

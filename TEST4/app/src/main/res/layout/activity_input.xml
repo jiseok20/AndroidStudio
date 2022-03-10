@@ -28,17 +28,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="장소 등록"
-        app:layout_constraintTop_toBottomOf="@+id/number"
+        app:layout_constraintHorizontal_bias="0.271"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/number" />
 
     <Button
         android:id="@+id/userbtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="30sp"
         android:text="사용자 등록"
         app:layout_constraintLeft_toRightOf="@+id/placebtn"
-        app:layout_constraintTop_toBottomOf="@+id/number"/>
+        app:layout_constraintTop_toBottomOf="@+id/number" />
 
     <View
         android:id="@+id/line"

@@ -1,8 +1,6 @@
 package com.example.test4;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +11,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.test4.FCM.httpsconnectionActivity;
 import com.example.test4.firestoreDB.InputActivity;
+import com.example.test4.firestoreDB.QRInfoActivity;
 import com.example.test4.firestoreDB.SearchActivity;
+import com.example.test4.firestoreDB.TakeNumberActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private long backBtnTime=0;
-    public static Context Mcontext;
     ImageView btn_img;
     boolean isThread = false;
 
@@ -51,6 +50,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button btn_QR = (Button) findViewById(R.id.btn_QR); //출입
         btn_QR.setOnClickListener((this));
 
+        Button btn_take_number = (Button) findViewById(R.id.btn_take_number); //출입
+        btn_take_number.setOnClickListener((this));
+
+        Button btn_makeQR = (Button) findViewById(R.id.btn_makeQR); //출입
+        btn_makeQR.setOnClickListener((this));
+
         Button btn_join = (Button)findViewById(R.id.btn_join); //등록
         btn_join.setOnClickListener((this));
 
@@ -67,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId())
         {
             case R.id.btn_QR: // 출입
-                Intent i=new Intent(this, QRScanActivity.class );
+                Intent i=new Intent(this, QRScanActivity.class );//TakeNumberActivity
                 startActivity(i);
                 break;
             case R.id.gif_image: // 크레딧
@@ -84,6 +89,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_covid: // 확진
                 i=new Intent(this, httpsconnectionActivity.class );
+                startActivity(i);
+                break;
+            case R.id.btn_take_number: // 번따
+                i=new Intent(this, TakeNumberActivity.class );
+                startActivity(i);
+                break;
+            case R.id.btn_makeQR: // QR 생성
+                i=new Intent(this, QRInfoActivity.class );
                 startActivity(i);
                 break;
             default:

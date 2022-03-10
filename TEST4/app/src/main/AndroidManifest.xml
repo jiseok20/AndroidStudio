@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.test4" >
+    package="com.example.test4">
 
     <uses-sdk tools:overrideLibrary="androidx.camera.camera2, androidx.camera.core,androidx.camera.view, androidx.camera.lifecycle" />
 
@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
@@ -20,13 +22,17 @@
     <uses-feature android:name="android.hardware.camera2.full" />
 
     <application
+        android:hardwareAccelerated="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_main"
         android:label="출입관리시스템"
         android:roundIcon="@mipmap/ic_main_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TEST4"
-        android:usesCleartextTraffic="true" >
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".firestoreDB.QRInfoActivity"
+            android:exported="false" />
         <activity
             android:name=".firestoreDB.InputActivity"
             android:exported="false" />
@@ -46,7 +52,7 @@
             android:name=".firestorage.CloudStorageActivity"
             android:exported="false" />
         <activity
-            android:name=".firestoreDB.FirestoreActivity"
+            android:name=".firestoreDB.TakeNumberActivity"
             android:exported="false" />
         <activity
             android:name=".fireAUTH.FirebaseUIActivity"
@@ -78,7 +84,7 @@
             android:exported="false" />
         <activity
             android:name=".LaunchActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -93,7 +99,7 @@
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.test4"
             android:exported="false"
-            android:grantUriPermissions="true" >
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
@@ -121,7 +127,7 @@
         <service
             android:name=".FCM.MyFirebaseMessagingService"
             android:directBootAware="true"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

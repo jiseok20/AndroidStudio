@@ -70,7 +70,6 @@ public class QRScanActivity extends AppCompatActivity implements View.OnClickLis
                         getUserInfo();
                     }
                 });
-
     }
 
     private void getUserInfo() {

@@ -92,12 +92,6 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
     @SuppressLint("NotifyDataSetChanged")
     private void  search() {
-//        if (uid == null) {
-//            Toast.makeText(this,
-//                    "메모를 추가하기 위해서는 Firebase 인증이 되어야합니다. Firebase 인증 후 다시 진행해주세요.",
-//                    Toast.LENGTH_LONG).show();
-//            return;
-//        }
 
         name=null;
         date=null;
@@ -108,12 +102,19 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         name=nameedit.getText().toString();
         date=dateedit.getText().toString();
         pwd=pwdedit.getText().toString();
+        String year,month,day;
+        year=date.substring(0,4);
+        month=date.substring(4,6);
+        day=date.substring(6);
+
+        date=null;
+        date=year+"-"+month+"-"+day;
 
         if (name.length() == 0 ||
                 date.length() == 0||
                     pwd.length() == 0) {
             Toast.makeText(this,
-                    "메모 제목 또는 메모 내용또는 비밀번호가 입력되지 않았습니다. 입력 후 다시 시도해주세요.",
+                    "장소 이름 또는 날짜 또는 비밀번호가 입력되지 않았습니다. 입력 후 다시 시도해주세요.",
                     Toast.LENGTH_LONG).show();
             return;
         }
@@ -131,6 +132,9 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                         check();
                     } else {
                         Log.d("jang", "No such document");
+                        Toast.makeText(SearchActivity.this,
+                                name+"은(는) 등록되어있지 않습니다. 다시 확인해주세요",
+                                Toast.LENGTH_LONG).show();
                     }
                 } else {
                     Log.d("jang", "get failed with ", task.getException());
