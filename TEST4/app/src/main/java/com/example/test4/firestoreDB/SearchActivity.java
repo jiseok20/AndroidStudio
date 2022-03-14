@@ -39,13 +39,11 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     private static String date=null;
     private static String pwd=null;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        init();
         initView();
     }
 
@@ -69,16 +67,6 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 break;
         }
     }
-
-    private void init() {
-        puitem = new ArrayList<>();
-
-//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//        if (user != null) {
-//            this.uid = user.getUid();
-//        }
-    }
-
     private void initView() {
         Button regbtn = (Button) findViewById(R.id.searchplace);
         regbtn.setOnClickListener(this);
@@ -141,10 +129,8 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 }
             }
         });
-
-
-
     }
+
     private void  check()
     {
         String password = pwdcheck.get("pwd").toString();

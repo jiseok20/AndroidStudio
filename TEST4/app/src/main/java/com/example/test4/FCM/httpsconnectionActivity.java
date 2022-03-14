@@ -93,7 +93,6 @@ public class httpsconnectionActivity extends AppCompatActivity implements View.O
                 confirmed();
                 break;
         }
-
     }
         private void confirmed () {
 
@@ -111,8 +110,6 @@ public class httpsconnectionActivity extends AppCompatActivity implements View.O
 
             date=null;
             date=year+"-"+month+"-"+day;
-
-
 
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -158,9 +155,6 @@ public class httpsconnectionActivity extends AppCompatActivity implements View.O
                 });
     }
 
-
-
-
     private void placeSearch(String date) {
 
         Iterator<String> keys = contactPlace.keySet().iterator();
@@ -199,7 +193,6 @@ public class httpsconnectionActivity extends AppCompatActivity implements View.O
                 }
             });
         }
-
     }
 
     private void tokenCollect(String date) {
@@ -247,7 +240,6 @@ public class httpsconnectionActivity extends AppCompatActivity implements View.O
                         }
                     });
         }
-
     }
 
     private void PushAlarm(String date) {
@@ -263,8 +255,6 @@ public class httpsconnectionActivity extends AppCompatActivity implements View.O
         {
             registToken.add(TokenCP.elementAt(i));
         }
-
-        //jsonObj.add("to", jsonElement);
         jsonObj.add("registration_ids", registToken);
 
         //Notification
