@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/black"
     android:orientation="vertical"
+
     tools:context=".CreditActivity">
 
     <TextView
@@ -25,5 +26,20 @@
         android:text="credit"
         android:textSize="15sp"
         android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/settings_button_X"
+        android:text="설정"
+
+        layout="@layout/settings_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|right"
+        android:layout_marginTop="500dp"
+        android:textColor="@color/black"
+        android:backgroundTint="#F463E1"
+        android:textStyle="bold"
+        app:layout_constraintRight_toRightOf="@id/preview_view"
+        app:layout_constraintTop_toTopOf="@id/preview_view"/>
 
 </LinearLayout>

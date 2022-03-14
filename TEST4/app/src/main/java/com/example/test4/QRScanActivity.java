@@ -103,6 +103,7 @@ public class QRScanActivity extends AppCompatActivity implements View.OnClickLis
         if(result != null) {
             if(result.getContents() == null) {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+                finish();
                 // todo
             } else {
                 placeName=result.getContents();
