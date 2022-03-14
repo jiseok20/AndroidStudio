@@ -55,10 +55,7 @@ public class TakeNumberActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_takenum);
-
         callPermission();
-
-
     }
 
     @Override
@@ -69,7 +66,6 @@ public class TakeNumberActivity extends AppCompatActivity implements View.OnClic
             default:
                 break;
         }
-
     }
 
     private void ScannumberQR() {
@@ -95,10 +91,6 @@ public class TakeNumberActivity extends AppCompatActivity implements View.OnClic
                 Log.d("jang",QRname);
                 Log.d("jang",QRnumber);
                 SaveNumber();
-
-//                Intent intent = new Intent(QRScanActivity.this, CameraXLivePreviewActivity.class);
-//                startActivity(intent);
-                // todo
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -196,7 +188,5 @@ public class TakeNumberActivity extends AppCompatActivity implements View.OnClic
             }
         }
     }
-
-
 }
 

@@ -1,6 +1,4 @@
 package com.example.test4.FCM;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;

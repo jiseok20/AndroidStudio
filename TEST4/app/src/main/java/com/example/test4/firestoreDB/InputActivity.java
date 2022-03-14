@@ -41,18 +41,14 @@ import java.util.Objects;
 import java.util.Random;
 
 public class InputActivity extends AppCompatActivity implements View.OnClickListener {
-
     private static String Token;
     private static String name = null;
     private static String number = null;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input);
-
-        init();
         initView();
     }
 
@@ -60,10 +56,7 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
     protected void onStart()
     {
         super.onStart();
-//        addChildEvent();
-        //addValueEventListener();
     }
-
 
     @Override
     public void onClick(View view) {
@@ -75,14 +68,6 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
                 regUser();
                 break;
         }
-    }
-
-    private void init() {
-
-//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//        if (user != null) {
-//            this.uid = user.getUid();
-//        }
     }
 
     private void initView() {
@@ -111,7 +96,6 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
                     Toast.LENGTH_LONG).show();
             return;
         }
-
 
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(new OnCompleteListener<String>() {
@@ -185,13 +169,10 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
                         }
                     }
                 });
-
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private void regPlace() {
-
-
         EditText nameedit = (EditText) findViewById(R.id.inputname);
         EditText numberedit = (EditText) findViewById(R.id.number);
 
