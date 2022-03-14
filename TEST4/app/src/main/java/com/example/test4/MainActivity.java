@@ -50,10 +50,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button btn_QR = (Button) findViewById(R.id.btn_QR); //출입
         btn_QR.setOnClickListener((this));
 
-        Button btn_take_number = (Button) findViewById(R.id.btn_take_number); //출입
+        Button btn_take_number = (Button) findViewById(R.id.btn_take_number); //번따
         btn_take_number.setOnClickListener((this));
 
-        Button btn_makeQR = (Button) findViewById(R.id.btn_makeQR); //출입
+        Button btn_makeQR = (Button) findViewById(R.id.btn_makeQR); //QR만들기
         btn_makeQR.setOnClickListener((this));
 
         Button btn_join = (Button)findViewById(R.id.btn_join); //등록

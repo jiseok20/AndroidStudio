@@ -18,28 +18,45 @@
         android:textSize="30sp"
         android:layout_gravity="center"
         />
-    <TextView
-        android:id="@+id/git_link"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:text="credit"
-        android:textSize="15sp"
-        android:layout_gravity="center"/>
 
     <Button
-        android:id="@+id/settings_button_X"
-        android:text="설정"
-
+        android:id="@+id/btn_github"
+        android:text="github.com/jiseok20/AndroidStudio"
         layout="@layout/settings_style"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center|right"
-        android:layout_marginTop="500dp"
-        android:textColor="@color/black"
-        android:backgroundTint="#F463E1"
+        android:layout_marginTop="100dp"
+        android:textColor="@color/white"
+        android:textSize="40dp"
+        android:backgroundTint="#000000"
         android:textStyle="bold"
         app:layout_constraintRight_toRightOf="@id/preview_view"
         app:layout_constraintTop_toTopOf="@id/preview_view"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="250dp"
+        android:gravity="right"
+        >
+
+        <Button
+            android:id="@+id/settings_button_X"
+            layout="@layout/settings_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#F463E1"
+            android:text="설정"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintRight_toRightOf="@id/preview_view"
+            app:layout_constraintTop_toTopOf="@id/preview_view" />
+
+
+
+
+    </LinearLayout>
+
 
 </LinearLayout>

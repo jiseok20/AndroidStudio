@@ -59,8 +59,6 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
         CompoundButton.OnCheckedChangeListener {
     private static final String TAG = "CameraXLivePreview";
     private static final int PERMISSION_REQUESTS = 1;
-    private static final String FACE_DETECTION = "Face Detection";
-    private static final String OBJECT_DETECTION = "Object Detection";
     private static final String OBJECT_DETECTION_CUSTOM = "Custom Object Detection";
     private static final String STATE_SELECTED_MODEL = "selected_model";
 
@@ -107,13 +105,13 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
                         provider -> {
                             cameraProvider = provider;
                             if (allPermissionsGranted()) {
-                                bindAllCameraUseCases();
+                                bindAllCameraUseCases(); //preview , analysis
                             }
                         });
 
 
 
-        if (!allPermissionsGranted()) {
+        if (!allPermissionsGranted()) { //권한 얻기
             getRuntimePermissions();
         }
     }
@@ -241,10 +239,6 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
                         PreferenceUtils.getCustomObjectDetectorOptionsForLivePreview(this, localModel);
                 imageProcessor = new ObjectDetectorProcessor(this, customObjectDetectorOptions);
 
-//                Log.i(TAG, "Using Object Detector Processor");
-//                ObjectDetectorOptions objectDetectorOptions =
-//                        PreferenceUtils.getObjectDetectorOptionsForLivePreview(this);
-//                imageProcessor = new ObjectDetectorProcessor(this, objectDetectorOptions);
             } else {
                 throw new IllegalStateException("Invalid model name");
             }
@@ -352,25 +346,6 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
         }
         Log.i(TAG, "Permission NOT granted: " + permission);
         return false;
-    }
-
-    private Interpreter getTfliteInterpreter(String modelPath) {
-        try {
-            return new Interpreter(loadModelFile(CameraXLivePreviewActivity.this, modelPath));
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public MappedByteBuffer loadModelFile(Activity activity, String modelPath) throws IOException {
-        AssetFileDescriptor fileDescriptor = activity.getAssets().openFd(modelPath);
-        FileInputStream inputStream = new FileInputStream(fileDescriptor.getFileDescriptor());
-        FileChannel fileChannel = inputStream.getChannel();
-        long startOffset = fileDescriptor.getStartOffset();
-        long declaredLength = fileDescriptor.getDeclaredLength();
-        return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength);
     }
 
     public void comeback_home() {
