@@ -59,7 +59,7 @@
             android:textColor="@color/black"
             android:backgroundTint="#F463E1"
             android:textStyle="bold"
-            android:text="QR 생성" />
+            android:text="번호 생성" />
 
         <Button
             android:id="@+id/btn_take_number"
@@ -70,7 +70,7 @@
             android:backgroundTint="#F463E1"
             android:textStyle="bold"
             android:layout_marginTop="30dp"
-            android:text="번 따" />
+            android:text="번호 스캔" />
 
     </LinearLayout>
 

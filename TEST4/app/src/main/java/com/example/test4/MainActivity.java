@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btn_img = findViewById(R.id.gif_image);
         btn_img.setOnClickListener((this));
-        Glide.with(this).load(R.drawable.circle).into(btn_img);
+        Glide.with(this).load(R.drawable.woowang).into(btn_img);
 
         Button btn_QR = (Button) findViewById(R.id.btn_QR); //출입
         btn_QR.setOnClickListener((this));

@@ -42,7 +42,7 @@
         app:layout_constraintRight_toRightOf="parent"/>
 
 <!--    <Button-->
-<!--        android:id="@+id/registeruser"-->
+<!--        android:id="@+id/register user"-->
 <!--        android:layout_width="wrap_content"-->
 <!--        android:layout_height="wrap_content"-->
 <!--        android:text="사용자 등록"-->

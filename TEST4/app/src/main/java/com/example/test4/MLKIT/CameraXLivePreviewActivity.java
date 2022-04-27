@@ -349,13 +349,14 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
     }
 
     public void comeback_home() {
-        Toast.makeText(this,"출입이 완료되었습니다",Toast.LENGTH_SHORT).show();
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 finish();
+
             }
         },2000);
-
+        Toast.makeText(this,"출입이 완료되었습니다",Toast.LENGTH_SHORT).show();
     }
 }
