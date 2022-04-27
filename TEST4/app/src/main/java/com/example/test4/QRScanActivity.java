@@ -107,9 +107,6 @@ public class QRScanActivity extends AppCompatActivity implements View.OnClickLis
             } else {
                 placeName=result.getContents();
                 firedbReg();
-
-//                Intent intent = new Intent(QRScanActivity.this, CameraXLivePreviewActivity.class);
-//                startActivity(intent);
                 // todo
             }
         } else {
