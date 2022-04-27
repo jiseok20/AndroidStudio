@@ -39,11 +39,13 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     private static String date=null;
     private static String pwd=null;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        init();
         initView();
     }
 
@@ -67,6 +69,16 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 break;
         }
     }
+
+    private void init() {
+        puitem = new ArrayList<>();
+
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        if (user != null) {
+//            this.uid = user.getUid();
+//        }
+    }
+
     private void initView() {
         Button regbtn = (Button) findViewById(R.id.searchplace);
         regbtn.setOnClickListener(this);
@@ -100,7 +112,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
         if (name.length() == 0 ||
                 date.length() == 0||
-                    pwd.length() == 0) {
+                pwd.length() == 0) {
             Toast.makeText(this,
                     "장소 이름 또는 날짜 또는 비밀번호가 입력되지 않았습니다. 입력 후 다시 시도해주세요.",
                     Toast.LENGTH_LONG).show();
@@ -129,8 +141,10 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 }
             }
         });
-    }
 
+
+
+    }
     private void  check()
     {
         String password = pwdcheck.get("pwd").toString();
