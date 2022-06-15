@@ -20,7 +20,7 @@ public class CreditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_credit);
 
         makers=findViewById(R.id.text_makers);
-        str1 = "Access Management \n\n\n2017035217 이지석\n2017035136 장준호\n";
+        str1 = "Access Management\n    Version 0.3.5 \n\n\n2017035217 이지석\n2017035136 장준호\n";
         makers.setText(str1);
 
 
